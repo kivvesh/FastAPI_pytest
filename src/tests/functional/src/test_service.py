@@ -1,54 +1,16 @@
-import requests
-import pytest
-import json
-
 from src.models.models import Name
+from src.tests.functional.points.api_methods import get_items,post_items
 
-from http import HTTPStatus
+def test_get_items_status():
+    req = get_items()
+    assert req.status_code == 200
 
+def test_get_items_correct_data():
+    req = get_items()
+    assert [Name(**i) for i in req.json()]
 
-@pytest.mark.asyncio
-async def test_get_items_status(
-    make_get_request
-):
-    body, headers, status = await make_get_request(
-        'http://127.0.0.1:8000/items'
-    )
-
-    assert status == 200
-    assert [Name(**i) for i in body]   #body == 1#[Name.parse_raw(**i) for i in body]
-
-@pytest.mark.asyncio
-async def test_get_items_data(
-    make_get_request
-):
-    body, headers, status = await make_get_request(
-        'http://127.0.0.1:8000/items'
-    )
-
-    assert [Name(**i) for i in body]
-
-@pytest.mark.asyncio
-async def test_post_add_status(
-    make_post_request
-):
+def test_post_add_status():
+    data = {'name':'name'}
     for i in range(3):
-        status = await make_post_request(
-            'http://127.0.0.1:8000/add',
-            data = {'name':'1'}
-        )
-        assert status == 200
-
-
-
-
-# @pytest.mark.asyncio
-# async def test_get_items_data(
-#     make_get_request
-# ):
-#     body, headers, status = await make_get_request(
-#         'http://127.0.0.1:8000/items'
-#     )
-#
-#     assert body == 1
-
+        req = post_items(data)
+        assert req.status_code == 200
