@@ -2,7 +2,7 @@ import random
 
 from fastapi import APIRouter
 
-from models.models import Name, Status
+from src.models.models import Name, Status
 
 router = APIRouter()
 @router.get('/items',response_model=list[Name])

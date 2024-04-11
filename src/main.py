@@ -2,9 +2,9 @@ import random
 
 from fastapi import FastAPI
 
-from models.models import Name, Status
-from api.v1 import items
-from tests.functional.settings import test_settings
+from src.models.models import Name, Status
+from src.api.v1 import items
+from src.tests.functional.settings import test_settings
 
 
 app = FastAPI(
