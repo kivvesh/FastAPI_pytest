@@ -1,7 +1,5 @@
 FROM python:3.11
 
-LABEL authors="kivvesh"
-
 # Папка, в которой будут размещаться файлы проекта внутри контейнера
 WORKDIR /opt/app
 
@@ -17,5 +15,6 @@ COPY . .
 
 EXPOSE 8000
 
-#RUN python -m gunicorn ./src/main:app -k uvicorn.workers.UvicornWorker
+#RUN python -m gunicorn src/main:app -k uvicorn.workers.UvicornWorker
+#RUN uvicorn src.main:app --reload
 ENTRYPOINT ["python", "-m", "gunicorn","-w", "4","-k", "uvicorn.workers.UvicornWorker", "src.main:app","--bind", "0.0.0.0:8000"]
